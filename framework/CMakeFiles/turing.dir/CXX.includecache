@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/root/FLA_Project/framework/turing-project/TuringMachine.cpp
+TuringMachine.h
+/root/FLA_Project/framework/turing-project/TuringMachine.h
+iostream
+-
+fstream
+-
+
+/root/FLA_Project/framework/turing-project/TuringMachine.h
+iostream
+-
+set
+-
+deque
+-
+vector
+-
+
