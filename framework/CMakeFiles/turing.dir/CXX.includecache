@@ -24,3 +24,9 @@ deque
 vector
 -
 
+/root/FLA_Project/framework/turing-project/main.cpp
+iostream
+-
+TuringMachine.h
+/root/FLA_Project/framework/turing-project/TuringMachine.h
+

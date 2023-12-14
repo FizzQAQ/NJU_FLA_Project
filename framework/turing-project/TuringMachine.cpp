@@ -39,7 +39,7 @@ vector<string> TuringMachine::statesAdd(string state){
 }
 void TuringMachine::readFile(){
         ifstream in;
-        in.open(tm_file_name,ios::in);
+        in.open("../programs/"+tm_file_name,ios::in);
         if(!in.is_open()){
             cerr<<"file no found"<<endl;
             exit(2);
@@ -133,6 +133,10 @@ void TuringMachine::readFile(){
         // for(auto it=functions.begin();it!=functions.end();it++){
         //     cout<<(*it)<<endl;
         // }
+        if(Q.empty()||S.empty()||G.empty()||q0.empty()||F.empty()||N==NULL){
+            cerr<<"syntax error"<<endl;
+            exit(10);
+        }
     
 }
 void TuringMachine::run(string input){
@@ -179,7 +183,6 @@ void TuringMachine::run(string input){
                 cout<<"No"<<endl;
             }
             for(int i=0;i<typeNum;i++){
-                
                 if(typeNum<10)
                     cout<<"Index"<<i<<" :";
                 else{
@@ -250,7 +253,7 @@ void TuringMachine::run(string input){
                 }
                 else {
                 for(int j=Headindex[i];j<=pointer[i];j++){
-                    if(j<Headindex[i]+N[i].size()){
+                    if(j<(Headindex[i]+(int)N[i].size())){
                         if(-10<j&&j<10)
                             cout<<" "<<N[i][j-Headindex[i]];
                             else cout<<" "<<N[i][j-Headindex[i]]<<" ";

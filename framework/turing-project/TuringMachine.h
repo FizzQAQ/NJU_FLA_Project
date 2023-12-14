@@ -16,7 +16,7 @@ private:
     string q0;
     char B='_';
     int typeNum;
-    deque<char>*N;
+    deque<char>*N=NULL;
     set<string>functions;
     string current_state;
     int *pointer;
