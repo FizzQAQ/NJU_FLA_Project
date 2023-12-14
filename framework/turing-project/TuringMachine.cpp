@@ -324,7 +324,11 @@ void TuringMachine::run(string input){
         if(End){
         if(Acc&&verbose){
         cout<<"ACCEPTED"<<endl;
-        cout<<"Result: true"<<endl;
+        cout<<"Result: ";
+        for(int j=0;j<N[0].size();j++){
+            cout<<N[0][j];
+        }
+        cout<<endl;
         cout<<END_LINE<<endl;
         }
         else if(Acc){
@@ -335,11 +339,22 @@ void TuringMachine::run(string input){
             cout<<endl;
         }
         else {
+            if(verbose){
+            cout<<"UNACCEPTED"<<endl;
+            cout<<"Result: ";
+            for(int j=0;j<N[0].size();j++){
+                cout<<N[0][j];
+            }
+            cout<<endl;
+            cout<<END_LINE<<endl;
+            }
+            else{
             cout<<"(UNACCEPTED) ";
             for(int j=0;j<N[0].size();j++){
                 cout<<N[0][j];
             }
             cout<<endl;
+            }
         }
         break;   
         }
@@ -371,7 +386,7 @@ void TuringMachine::state_change(){
                     }
                 }
                 else{
-                    if(oldtape[i]!='_'){
+                    if(oldtape[i]!=B){
                        right=false; 
                     }
                 }
@@ -384,37 +399,45 @@ void TuringMachine::state_change(){
                 for(int i=0;i<typeNum;i++){
                     auto it=N[i].begin();
                     if(pointer[i]>=Headindex[i]&&pointer[i]<Headindex[i]+N[i].size()){
+                        if(newtape[i]!='*')
                         *(it+pointer[i]-Headindex[i])=newtape[i];
                     }
                     else{//pointer指向blank
-                        if(newtape[i]!='_'){
+                        if(newtape[i]!=B){
                             if(pointer[i]<Headindex[i]){
                                 for(int j=0;j<(Headindex[i]-pointer[i]-1);j++){
-                                    N[i].push_front('_');
+                                    N[i].push_front(B);
                                     
                                 }
+                                if(newtape[i]!='*')
                                 N[i].push_front(newtape[i]);
+                                else{
+                                    N[i].push_back(B);
+                                }
                                 Headindex[i]-=(Headindex[i]-pointer[i]);
 
                             }
                             else if(pointer[i]>=N[i].size()+Headindex[i]){
                                 for(int j=0;j<(pointer[i]-N[i].size()-Headindex[i]);j++){
-                                    N[i].push_back('_');
+                                    N[i].push_back(B);
                                 }
+                                if(newtape[i]!='*')
                                 N[i].push_back(newtape[i]);
-                                
+                                else{
+                                    N[i].push_back(B);
+                                }
                             }
                         }
 
                     }
-                    while (N[i].size()!=0&&(*it)=='_')
+                    while (N[i].size()!=0&&(*it)==B)
                     {
                         N[i].pop_front();
                         if(N[i].size()!=0)
                         Headindex[i]++;
                         it=N[i].begin();
                     }
-                    while(N[i].size()!=0&&*(it+N[i].size()-1)=='_'){
+                    while(N[i].size()!=0&&*(it+N[i].size()-1)==B){
                         N[i].pop_back();
                         it=N[i].begin();
                     }
