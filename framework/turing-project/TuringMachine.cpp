@@ -179,6 +179,7 @@ void TuringMachine::run(string input){
                 cout<<"No"<<endl;
             }
             for(int i=0;i<typeNum;i++){
+                
                 if(typeNum<10)
                     cout<<"Index"<<i<<" :";
                 else{
@@ -189,16 +190,17 @@ void TuringMachine::run(string input){
                         cout<<"Index"<<i<<" :";
                 } 
             if(pointer[i]<Headindex[i]){
+                
                 if(N[i].size()==0){
                     cout<<" "<<(pointer[i]<0?-pointer[i]:pointer[i]);
                 }
                 else{
-                for(int j=pointer[i];j<Headindex[i]+N[i].size();j++){
+                for(int j=pointer[i];j<(Headindex[i]+(int)N[i].size());j++){
                     cout<<" "<<(j<0?-j:j);
                     }
                 }
             }
-            else if(pointer[i]>=Headindex[i]+N[i].size()){
+            else if(pointer[i]>=(Headindex[i]+(int)N[i].size())){
                 if(N[i].size()==0){
                     cout<<" "<<(pointer[i]<0?-pointer[i]:pointer[i]);
                 }
@@ -209,7 +211,7 @@ void TuringMachine::run(string input){
                 }
             }
             else{
-            for(int j=Headindex[i];j<Headindex[i]+N[i].size();j++){
+            for(int j=Headindex[i];j<(Headindex[i]+(int)N[i].size());j++){
                cout<<" "<<(j<0?-j:j);
             }
             }
@@ -229,7 +231,7 @@ void TuringMachine::run(string input){
                     cout<<" "<<B;
                 }
                 else{
-                    for(int j=pointer[i];j<Headindex[i]+N[i].size();j++){
+                    for(int j=pointer[i];j<(Headindex[i]+(int)N[i].size());j++){
                         if(j<Headindex[i])
                             if(-10<j&&j<10)
                             cout<<" "<<B;
@@ -242,7 +244,7 @@ void TuringMachine::run(string input){
                     }
                 }
             }
-            else if(pointer[i]>=Headindex[i]+N[i].size()){
+            else if(pointer[i]>=(Headindex[i]+(int)N[i].size())){
                 if(N[i].size()==0){
                     cout<<" "<<B;
                 }
@@ -262,7 +264,7 @@ void TuringMachine::run(string input){
                 }
             }
             else{
-                for(int j=Headindex[i];j<Headindex[i]+N[i].size();j++){
+                for(int j=Headindex[i];j<(Headindex[i]+(int)N[i].size());j++){
                 if(-10<j&&j<10)
                     cout<<" "<<N[i][j-Headindex[i]];
                 else cout<<" "<<N[i][j-Headindex[i]]<<" ";
@@ -283,7 +285,7 @@ void TuringMachine::run(string input){
             if(pointer[i]<Headindex[i]){
                 cout<<" ^";
             }
-            else if(pointer[i]>=Headindex[i]+N[i].size()){
+            else if(pointer[i]>=(Headindex[i]+(int)N[i].size())){
                 if(N[i].size()==0){
                     cout<<" ^";
                 }
@@ -304,7 +306,7 @@ void TuringMachine::run(string input){
                 }
             }
             else{
-            for(int j=Headindex[i];j<Headindex[i]+N[i].size();j++){
+            for(int j=Headindex[i];j<(Headindex[i]+(int)N[i].size());j++){
                  if(j==pointer[i])
                     if(-10<j&&j<10)
                         cout<<" ^";
@@ -374,7 +376,7 @@ void TuringMachine::state_change(){
             string oldtape=tmp.substr(0,space);
             bool right=true;
             for(int i=0;i<typeNum;i++){
-                if(pointer[i]>=Headindex[i]&&pointer[i]<Headindex[i]+N[i].size())
+                if(pointer[i]>=Headindex[i]&&pointer[i]<(Headindex[i]+(int)N[i].size()))
                     {
                     if(oldtape[i]=='*'){
                         if(N[i][pointer[i]-Headindex[i]]==B){
@@ -398,8 +400,8 @@ void TuringMachine::state_change(){
                 string newtape=tmp.substr(0,space);
                 for(int i=0;i<typeNum;i++){
                     auto it=N[i].begin();
-                    if(pointer[i]>=Headindex[i]&&pointer[i]<Headindex[i]+N[i].size()){
-                        if(newtape[i]!='*')
+                    if(newtape[i]!='*'){
+                    if(pointer[i]>=Headindex[i]&&pointer[i]<(Headindex[i]+(int)N[i].size())){
                         *(it+pointer[i]-Headindex[i])=newtape[i];
                     }
                     else{//pointer指向blank
@@ -409,27 +411,22 @@ void TuringMachine::state_change(){
                                     N[i].push_front(B);
                                     
                                 }
-                                if(newtape[i]!='*')
                                 N[i].push_front(newtape[i]);
-                                else{
-                                    N[i].push_back(B);
-                                }
                                 Headindex[i]-=(Headindex[i]-pointer[i]);
 
                             }
-                            else if(pointer[i]>=N[i].size()+Headindex[i]){
+                            else if(pointer[i]>=(Headindex[i]+(int)N[i].size())){
                                 for(int j=0;j<(pointer[i]-N[i].size()-Headindex[i]);j++){
                                     N[i].push_back(B);
                                 }
-                                if(newtape[i]!='*')
                                 N[i].push_back(newtape[i]);
-                                else{
-                                    N[i].push_back(B);
-                                }
+                                
                             }
                         }
 
                     }
+                    }
+                    it=N[i].begin();
                     while (N[i].size()!=0&&(*it)==B)
                     {
                         N[i].pop_front();
@@ -442,7 +439,8 @@ void TuringMachine::state_change(){
                         it=N[i].begin();
                     }
                       
-                }
+                    }
+                
                 tmp=tmp.substr(space+1);
                 space=tmp.find(" ");
                 string directions=tmp.substr(0,space);

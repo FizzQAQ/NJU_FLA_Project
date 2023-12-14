@@ -73,4 +73,3 @@ reject11 __ n_ r* reject12
 reject12 __ p_ r* reject13
 reject13 __ u_ r* reject14
 reject14 __ t_ ** halt_reject
-
