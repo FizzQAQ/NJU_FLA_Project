@@ -39,7 +39,7 @@ vector<string> TuringMachine::statesAdd(string state){
 }
 void TuringMachine::readFile(){
         ifstream in;
-        in.open("../programs/"+tm_file_name,ios::in);
+        in.open(tm_file_name,ios::in);
         if(!in.is_open()){
             cerr<<"file no found"<<endl;
             exit(2);
